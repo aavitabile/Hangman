@@ -1,0 +1,40 @@
+import random
+
+def hangman():
+    word_list = ["python", "java", "javascript", "ruby"]
+    word = random.choice(word_list)
+    word_letters = set(word)
+    alphabet = set("abcdefghijklmnopqrstuvwxyz")
+    letter_storage = []
+    attempts = 6
+    while (len(word_letters) > 0) and attempts > 0:
+        print(f"You have {attempts} attempts left")
+        mixture = ""
+        for letter in word:
+            if letter in letter_storage:
+                mixture += letter
+            else:
+                mixture += "_"
+        
+        if mixture == word:
+            print("You win! The word was:",word)
+            break
+        
+        print("Guess a letter:", mixture)
+        guess = input()
+        if guess in alphabet:
+            alphabet.discard(guess)
+            if guess in word_letters:
+                word_letters.discard(guess)
+                letter_storage.append(guess)
+            else:
+                attempts -= 1
+                print("Incorrect")
+        else:
+            print("Enter a valid character")
+    
+    if attempts == 0:
+        print(f"You lost! The word was {word}")
+        
+if __name__ == '__main__':
+    hangman()
